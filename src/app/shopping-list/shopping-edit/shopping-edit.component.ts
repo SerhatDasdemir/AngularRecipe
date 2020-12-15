@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {IngredientModel} from '../../shared/ingredient.model';
+import {publish} from 'rxjs/operators';
+import {ShoppingListComponent} from '../shopping-list.component';
+import index from '@angular/cli/lib/cli';
+import {ShoppingListService} from '../shopping-list.service';
 
 @Component({
-  selector: 'app-shoping-edit',
-  templateUrl: './shoping-edit.component.html',
-  styleUrls: ['./shoping-edit.component.css']
+  selector: 'app-shopping-edit',
+  templateUrl: './shopping-edit.component.html',
+  styleUrls: ['./shopping-edit.component.css']
 })
-export class ShopingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('nameInput') nameInputRef: ElementRef;
+  @ViewChild('amountInput') amountInputRef: ElementRef;
 
-  ngOnInit(): void {
+
+
+
+
+  constructor(private slService:ShoppingListService) { }
+
+  ngOnInit() {  }
+
+  onAddItem() {
+    const ingName = this.nameInputRef.nativeElement.value;
+    const ingAmount = this.amountInputRef.nativeElement.value;
+    const newIngredient = new IngredientModel(ingName, ingAmount);
+    this.slService.addIngredient(newIngredient);
+
   }
+
+  onDeleteItem(){
+
+    // this.slService.clearList();
+
+  }
+
+
+  onClearItem() {
+
+    }
+
 
 }
